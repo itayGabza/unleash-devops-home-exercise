@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "homeAssignment.fullname" . }}
+  labels:
+    {{- include "homeAssignment.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "homeAssignment.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "homeAssignment.name" . }}
+    spec:
+      serviceAccountName: s3-access-sa
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.env.PORT }}
+        env:
+        - name: PORT
+          value: "{{ .Values.env.PORT }}"
+        - name: BUCKET_NAME
+          value: "{{ .Values.env.BUCKET_NAME }}"
+        - name: AWS_REGION
+          value: "{{ .Values.env.AWS_REGION }}"

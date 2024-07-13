@@ -1,0 +1,49 @@
+# values.yaml
+replicaCount: 2
+
+image:
+  repository: 905418187602.dkr.ecr.us-east-1.amazonaws.com/home_assignment
+  pullPolicy: Always
+  tag: 1ab2081f29eea2bb6003ea19457dd0355542b21c
+
+service:
+  type: LoadBalancer
+  port: 80
+
+serviceAccount:
+  create: false
+  name: s3-access-sa
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths: []
+  tls: []
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPU: 80
+  targetMemory: 80
+
+hpam:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPU: 80
+  targetMemory: 80
+env:
+  PORT: 3000
+  BUCKET_NAME: aws-cloudtrail-logs-905418187602-c1ef6c34
+  AWS_REGION: us-east-1
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: []
