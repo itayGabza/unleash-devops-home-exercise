@@ -38,5 +38,5 @@ jobs:
 
     - name: Deploy to EKS
       run: |
-        export KUBECONFIG=$HOME/kubeconfig
+        export KUBECONFIG=kubeconfig
         helm -n app upgrade --install homeassignment ./homeassignment 
